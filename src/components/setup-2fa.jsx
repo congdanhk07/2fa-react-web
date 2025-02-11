@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
@@ -7,11 +7,21 @@ import SecurityIcon from '@mui/icons-material/Security'
 import CancelIcon from '@mui/icons-material/Cancel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-
-// Tài liệu về Material Modal rất dễ ở đây: https://mui.com/material-ui/react-modal/
-function Setup2FA({ isOpen, toggleOpen }) {
+import { get2FA_QRCodeAPI } from '~/apis'
+function Setup2FA({ isOpen, toggleOpen, user }) {
   const [otpToken, setConfirmOtpToken] = useState('')
   const [error, setError] = useState(null)
+  const [qrCodeImageUrl, setQrCodeImageUrl] = useState(null)
+
+  useEffect(() => {
+    if (isOpen) {
+      get2FA_QRCodeAPI(user._id).then((res) => {
+        setQrCodeImageUrl(res.qrcode)
+      })
+    }
+
+    return () => {}
+  }, [isOpen, user._id])
 
   const handleCloseModal = () => {
     toggleOpen(!isOpen)
@@ -95,11 +105,15 @@ function Setup2FA({ isOpen, toggleOpen }) {
             p: 1
           }}
         >
-          <img
-            style={{ width: '100%', maxWidth: '250px', objectFit: 'contain' }}
-            src='src/assets/trancongdanh-qr-code.png'
-            alt='card-cover'
-          />
+          {!qrCodeImageUrl ? (
+            <span>Loading...</span>
+          ) : (
+            <img
+              style={{ width: '100%', maxWidth: '250px', objectFit: 'contain' }}
+              src={qrCodeImageUrl}
+              alt='card-cover'
+            />
+          )}
 
           <Box sx={{ textAlign: 'center' }}>
             Quét mã QR trên ứng dụng <strong>Google Authenticator</strong> hoặc{' '}

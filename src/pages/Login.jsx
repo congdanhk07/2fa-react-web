@@ -38,7 +38,7 @@ function Login() {
         minHeight: '100vh',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        background: 'url("src/assets/trungquandev-bg-img.jpg")',
+        background: 'url("src/assets/trancongdanh-bg-img.jpg")',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -67,8 +67,8 @@ function Login() {
               }}
             >
               <Box>
-                <Typography>Hint: trungquandev.official@gmail.com</Typography>
-                <Typography>Pass: trungquandev@123</Typography>
+                <Typography>Hint: trancongdanh@gmail.com</Typography>
+                <Typography>Pass: trancongdanh@123</Typography>
               </Box>
             </Box>
             <Box sx={{ padding: '0 1em 1em 1em' }}>

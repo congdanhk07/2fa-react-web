@@ -65,7 +65,7 @@ function Dashboard() {
       }}
     >
       {/* Modal để user cài đặt 2FA */}
-      <Setup2FA isOpen={openSetup2FA} toggleOpen={setOpenSetup2FA} />
+      <Setup2FA isOpen={openSetup2FA} toggleOpen={setOpenSetup2FA} user={user} />
 
       {/* Modal yêu cầu xác thực 2FA */}
       {/* Với điều kiện user đã bật tính năng 2FA, và user chưa xác thực 2FA ngay sau khi đăng nhập ở lần tiếp theo */}
