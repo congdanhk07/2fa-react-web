@@ -19,7 +19,6 @@ function Setup2FA({ isOpen, toggleOpen, user }) {
         setQrCodeImageUrl(res.qrcode)
       })
     }
-
     return () => {}
   }, [isOpen, user._id])
 
