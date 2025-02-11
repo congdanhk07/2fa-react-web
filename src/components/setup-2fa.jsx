@@ -34,7 +34,7 @@ function Setup2FA({ isOpen, toggleOpen, user }) {
       return
     }
     console.log('handleConfirmSetup2FA > otpToken: ', otpToken)
-    // Call API here
+    // Handle API
   }
 
   return (
