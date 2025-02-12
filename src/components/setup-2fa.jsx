@@ -7,8 +7,8 @@ import SecurityIcon from '@mui/icons-material/Security'
 import CancelIcon from '@mui/icons-material/Cancel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { get2FA_QRCodeAPI } from '~/apis'
-function Setup2FA({ isOpen, toggleOpen, user }) {
+import { get2FA_QRCodeAPI, setup2FA_API } from '~/apis'
+function Setup2FA({ isOpen, toggleOpen, user, handleSuccessSetup2FA }) {
   const [otpToken, setConfirmOtpToken] = useState('')
   const [error, setError] = useState(null)
   const [qrCodeImageUrl, setQrCodeImageUrl] = useState(null)
@@ -35,6 +35,12 @@ function Setup2FA({ isOpen, toggleOpen, user }) {
     }
     console.log('handleConfirmSetup2FA > otpToken: ', otpToken)
     // Handle API
+    setup2FA_API(user._id, otpToken).then((updatedUser) => {
+      // Gọi lên component cha (Dashboard) để xử lý tiếp khi thành công
+      handleSuccessSetup2FA(updatedUser)
+      toast.success('Setup 2FA successfully!')
+      setError(null)
+    })
   }
 
   return (
