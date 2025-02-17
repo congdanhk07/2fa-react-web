@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom'
 import { fetchUserAPI, logoutAPI } from '~/apis'
 import Setup2FA from '~/components/setup-2fa'
 import Require2FA from '~/components/require-2fa'
-
 function Dashboard() {
   const [user, setUser] = useState(null)
   const [openSetup2FA, setOpenSetup2FA] = useState(false)
@@ -40,7 +39,10 @@ function Dashboard() {
     localStorage.setItem('userInfo', JSON.stringify(updatedUser))
     setOpenSetup2FA(false)
   }
-
+  const handleSuccessVerify2FA = (updatedUser) => {
+    setUser(updatedUser)
+    localStorage.setItem('userInfo', JSON.stringify(updatedUser))
+  }
   if (!user) {
     return (
       <Box
@@ -82,7 +84,12 @@ function Dashboard() {
       {/* Modal yêu cầu xác thực 2FA */}
       {/* Với điều kiện user đã bật tính năng 2FA, và user chưa xác thực 2FA ngay sau khi đăng nhập ở lần tiếp theo */}
       {/* <Require2FA /> */}
-      {user.require_2fa && !user.is_2fa_verified && <Require2FA />}
+      {user.require_2fa && !user.is_2fa_verified && (
+        <Require2FA
+          user={user}
+          handleSuccessVerify2FA={handleSuccessVerify2FA}
+        />
+      )}
 
       <Box>
         <img

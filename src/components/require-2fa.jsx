@@ -6,9 +6,10 @@ import Typography from '@mui/material/Typography'
 import SecurityIcon from '@mui/icons-material/Security'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import { verify2FA_API } from '~/apis'
 
 // Tài liệu về Material Modal rất dễ ở đây: https://mui.com/material-ui/react-modal/
-function Require2FA() {
+function Require2FA({ user, handleSuccessVerify2FA }) {
   const [otpToken, setConfirmOtpToken] = useState('')
   const [error, setError] = useState(null)
 
@@ -21,6 +22,11 @@ function Require2FA() {
     }
     console.log('handleRequire2FA > otpToken: ', otpToken)
     // Call API here
+    verify2FA_API(user._id, otpToken).then((updatedUser) => {
+      handleSuccessVerify2FA(updatedUser)
+      toast.success('Verified 2FA successfully!')
+      setError(null)
+    })
   }
 
   return (
